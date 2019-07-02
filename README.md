@@ -10,5 +10,5 @@ course titled "Data Structures and Algorithms Through Python In Depth" by Deepal
 
 3- "Advanced Data Structures in Java" , Udemy Course by by Deepali Srivastava 
 
-4- "Advanced Data Structures in Python" , Udemy Course by by Deepali Srivastava 
+4- "Data Structures in Python" , Udemy Course by by Deepali Srivastava 
 
