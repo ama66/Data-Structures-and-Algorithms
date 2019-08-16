@@ -51,3 +51,14 @@ print ("The summation of list using reduce is :")
 print (functools.reduce(lambda x,y:x+y,lis)) 
 
 
+a=[1,2,4]
+print('some text: {} , {}, {}'.format(*a))
+
+## you can unpack dictionary with two ** 
+def nmy_funct(*args, **keywordargs):
+	print(keywordargs)
+	for arg in keywordargs:
+		print(arg, keywordargs[arg])
+nmy_funct(1,2,3, name='too', age=29)
+
+
