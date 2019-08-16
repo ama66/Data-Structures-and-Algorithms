@@ -61,4 +61,16 @@ def nmy_funct(*args, **keywordargs):
 		print(arg, keywordargs[arg])
 nmy_funct(1,2,3, name='too', age=29)
 
+## Assignment: write a function that takes in a function as argument , then use it ! for example pass lambda function and use it ! 
+## Can you handle infinite amount of arguments.
+
+def transform_data(fn, *args):
+	for arg in args:
+		#print(fn(arg))
+		print('Result: {:^10.2f}'.format(fn(arg)))
+	return 0
+print(transform_data(lambda x: 2*x, 10,12,23))
+
+
+
 
