@@ -12,6 +12,8 @@ from collections import OrderedDict
 
 
 class Lazy_Read_Csv:
+    """ a class to read in humungous csv file , group it by entity (like country) and dump each
+    group data to a single csv file ..."""
     
     def __init__(self,file_path):
         self.file_path=file_path
