@@ -182,15 +182,16 @@ def merge_lists(lists):
     elems.sort()
     
     idx=0
-    head=ListNode(elems[idx])
-    cur=head
     while idx < len(elems):
-        idx+=1 
-        cur.next=ListNode(idx)
-        cur=cur.next 
-    
-        
-    
+        if idx==0:
+            head=ListNode(elems[idx])
+            cur=head
+            idx+=1 
+        else:
+            cur.next=ListNode(elems[idx])
+            cur=cur.next 
+            idx+=1 
+            
     # TODO: Write your code here
     return head
 
