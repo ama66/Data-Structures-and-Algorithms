@@ -37,3 +37,63 @@ input = ['cat', 'cats', 'dog', 'catsdog']
 
 print(Solution().findAllConcatenatedWords(input))
 ## ['catsdog']
+
+### Median of a stream of numbers 
+
+## import heapq
+## Note that we do not have maxheap 
+## so to use minheap we multiply numbers by -1 for example if 7 is max element then -7 is minelement! 
+
+def get_median(min_heap, max_heap):
+  if len(min_heap) > len(max_heap):
+    return min_heap[0]
+  elif len(min_heap) < len(max_heap):
+    return -max_heap[0]
+
+  else:
+    min_root = min_heap[0]
+    max_root = -max_heap[0]
+    return (min_root + max_root) / 2.0
+
+
+
+def add(num, min_heap, max_heap):
+  if len(min_heap) + len(max_heap) <= 1: # if one is empty add to the maxheap 
+    heapq.heappush(max_heap, -num)
+    return
+
+  median = get_median(min_heap, max_heap)
+    
+  if num > median:
+    heapq.heappush(min_heap, num)
+  else:
+    heapq.heappush(max_heap, -num)
+
+def rebalance(min_heap, max_heap):
+  if len(min_heap) > len(max_heap) + 1:
+    root = heapq.heappop(min_heap)
+    heapq.heappush(max_heap, -root)
+    
+  elif len(max_heap) > len(min_heap) + 1:
+    root = -heapq.heappop(max_heap)
+    heapq.heappush(min_heap, root)
+
+def print_median(min_heap, max_heap):
+  print(get_median(min_heap, max_heap))
+
+def running_median(stream):
+ ## initialize two heaps for the elements below the median (maxheap)  and above the median (minheap)
+  min_heap = []
+  max_heap = []
+  ### Algorithm
+  for num in stream:
+    #(1) add to min or maxheap
+    add(num, min_heap, max_heap)
+    #(2)rebalance heaps if one is > the other by 2 numbers 
+    rebalance(min_heap, max_heap)
+    ## (3) compute and print median 
+    print_median(min_heap, max_heap)
+
+running_median([2, 1, 4, 7, 2, 0, 5])
+# 2 1.5 2 3.0 2 2.0 2
+
