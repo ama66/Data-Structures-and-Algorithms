@@ -36,3 +36,4 @@ class Solution(object):
 input = ['cat', 'cats', 'dog', 'catsdog']
 
 print(Solution().findAllConcatenatedWords(input))
+## ['catsdog']
