@@ -1,5 +1,6 @@
 ## implement Binary Tree methods
 
+from collections import deque
 class Node:
     def __init__(self,info):
         self.info=info
@@ -42,7 +43,19 @@ class BinaryTree:
         self._postorder(rootnode.rchild)
         print(rootnode.info, " ", end="")
         
-        
+
+    def levelorder(self):
+        qu=deque()
+        qu.append(self.root)
+        while len(qu)!=0:
+            p=qu.popleft()
+            print(p.info, " ", end="")
+            if p.lchild:
+                qu.append(p.lchild)
+            if p.rchild:
+                qu.append(p.rchild)
+                
+
         
         
         
@@ -62,6 +75,8 @@ print("This is inorder traversal of the tree")
 bt.inorder()
 print("This is postorder traversal of the tree")
 bt.postorder()
+print("This is level order traversal of the tree")
+bt.levelorder()
 
 This is preorder traversal of the tree
 P  Q  A  B  R  X  
@@ -69,3 +84,5 @@ This is inorder traversal of the tree
 A  Q  B  P  X  R  
 This is postorder traversal of the tree
 A  B  Q  X  R  P  
+This is level order traversal of the tree
+P  Q  R  A  B  X  
