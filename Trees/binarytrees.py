@@ -57,7 +57,15 @@ class BinaryTree:
                 
 
         
-        
+    @property         
+    def height(self):
+        return self._height(self.root)
+    
+    def _height(self,root):
+        if root==None:
+            return 0 
+        return 1+max(self._height(root.lchild),self._height(root.rchild))
+    
         
     def create_tree(self):
         self.root=Node("P")
@@ -77,6 +85,8 @@ print("This is postorder traversal of the tree")
 bt.postorder()
 print("This is level order traversal of the tree")
 bt.levelorder()
+print("\nTree height is ")
+print(bt.height)
 
 This is preorder traversal of the tree
 P  Q  A  B  R  X  
@@ -86,3 +96,6 @@ This is postorder traversal of the tree
 A  B  Q  X  R  P  
 This is level order traversal of the tree
 P  Q  R  A  B  X  
+Tree height is 
+3
+
