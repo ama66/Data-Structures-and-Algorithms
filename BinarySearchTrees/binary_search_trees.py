@@ -72,11 +72,14 @@ class BinarySearchTree:
         qu.append(self.root)
         while len(qu)!=0:
             p=qu.popleft()
-            print(p.info, " ", end="")
-            if p.lchild:
-                qu.append(p.lchild)
-            if p.rchild:
-                qu.append(p.rchild)
+            try: 
+                print(p.info, " ", end="")
+                if p.lchild:
+                    qu.append(p.lchild)
+                if p.rchild:
+                    qu.append(p.rchild)
+            except:
+                pass
     @property         
     def height(self):
         return self._height(self.root)
@@ -157,6 +160,95 @@ class BinarySearchTree:
             
         return 
     
+    def delete(self,x):
+        self.root=self._delete(self.root,x)
+        
+        
+    def _delete(self,p,x):
+        ## Recursion could end If I cannot find x and I end up in a None node after honing in on x
+        if p==None:
+            print(x , " cannot be found")
+            return p
+        ## Other recursive path is to end up finding x 
+        if x < p.info:
+            p.lchild=self._delete(p.lchild,x)
+        elif x > p.info:
+            p.rchild=self._delete(p.rchild,x)
+        else:
+            ## Found node to be deleted
+            #Case where the node to be deleted has two children 
+             if p.lchild is not None and p.rchild is not None:
+                # find inorder successor of the node p and replace it by that node
+                s=p.rchild 
+                while s.lchild is not None:
+                    s=s.lchild 
+                p.info=s.info
+                ## Now starting at subtree rooted at p.rchild delete s.info 
+                p.rchild=self._delete(p.rchild, s.info)
+                 
+             else: # case where I have either one child or None 
+                ## Find if I have left or right child and assign a value for child pointer ch
+                if p.lchild is not None:
+                    ch=p.lchild
+                else:
+                    ch=p.rchild 
+                ## let p = child 
+                p=ch
+            
+        return p 
+        
+        
+    def delete1(self,x):
+        """ Iterative implementation"""
+        ## First find node to be deleted x start the search at the root 
+        p=self.root 
+        par=None # parent of the root initially none 
+        ## Traverse the tree looking for the node x and update parent
+        while p is not None:
+            if p.info==x:
+                break 
+            par=p
+            if p.info < x: 
+                p=p.rchild 
+            else: 
+                p=p.lchild 
+                
+        if p==None:
+            print(x, "Cannot be found in the BS Tree")
+            return 
+        ## if this is not the case then x was found and p refers to this node 
+        # and par is its parent. Now we have two possibilities
+        # C) p has two children 
+        if p.lchild is not None and p.rchild is not None:
+            # find inorder successor of the node p and replace it by that node
+            s=p.rchild 
+            s_par=p
+            while s.lchild is not None:
+                s_par=s
+                s=s.lchild 
+            ## Now reduce the delete problem to another one in which the node
+            ## can have either one or no children. This is one of these cases
+            ## where s does not have left child but the later part of the code
+            ## will handle the two cases where the node could have either left or right child
+            ## and the other one is missing
+            p=s
+            par=s_par
+        
+        ## Case where p has left child and no right child
+        if p.lchild is not None:
+            ch=p.lchild 
+        else:
+            ch=p.rchild 
+        ## Now I determined the child of the node to be deleted.
+        # and I know its parent par!
+        if par==None:
+            self.root=ch
+        elif p==par.lchild:
+            par.lchild=ch
+        else:
+            par.rchild=ch
+        
+     
         
         
     def create_tree(self):
@@ -203,15 +295,10 @@ if max_node:
 min_node1=bt.min1()
 if min_node1:
     print("Min node found: ", min_node1.info)
-    
-#              25
-#          /       \
-#       20          35
-#     /     \       /
-#    18     23    30
 
     
-    25  20  35  18  23  35  
+    
+ 25  20  35  18  23  35  
 Found Node Recursively:  18
 
 Found Node Iteratively:  18
@@ -223,11 +310,13 @@ Max node found:  35
 Max node found:  35
 Min node found:  18
 Min node found:  18
+    
+    
+bt.insert1(50)
+bt.levelorder()
+bt.insert1(50)
+bt.levelorder()
 
-bt.insert1(50)
-bt.levelorder()
-bt.insert1(50)
-bt.levelorder()
 
 25  20  35  18  23  35  50  
 node  50  already exist in tree
@@ -246,7 +335,23 @@ bt.levelorder()
 bt.insert(5)
 bt.levelorder()
 
-node  50  already exist in tree
-25  20  35  18  23  35  50  5  node  5  already exist in tree
-25  20  35  18  23  35  50  5  
 
+
+node  50  already exist in tree
+25  20  35  18  23  35  25  20  35  18  23  35  5  
+
+
+bt.delete1(5)
+bt.levelorder()
+
+
+bt.delete1(5)
+
+bt.levelorder()
+
+25  20  35  18  23  35  
+
+bt.delete1(35)
+bt.levelorder()
+
+25  20  35  18  23  
