@@ -59,30 +59,86 @@ class Heap:
             i=lchild 
             
         self.a[i]=val
-    
         
-h=Heap()
+    @staticmethod
+    def heapify_top_down(H):
+        ## H is an Array 
+        n=len(H)
+        x=Heap()
+        for i in range(1,n+1):
+            x.a[i]=H[i-1]
+        x.n=n 
+        
+        ## Now heapify top down
+        for i in range(2,n+1):
+            x.restore_up(i)
+            
+        return x
+    
+    @staticmethod   
+    def heapify_bottom_up(H):
+        ## 
+        n=len(H)
+        x=Heap()
+        for i in range(1,n+1):
+            x.a[i]=H[i-1]
+            
+        x.n=n 
+        # first non-leaf node   
+        i=n//2
+        while i >=1:
+            x.restore_down(i)
+            i-=1
+        return x
+    
+    h=Heap()
 h.insert(35)
 h.insert(38)
 h.insert(59)
 h.delete()
 
-h.n
+59
 
-2
-h.a
+H=[20,33,15,6,40,60,45,16,75,10,80,12]
+x=Heap.heapify_top_down(H)
+x.a
 [inf,
- 38,
- 35,
+ 80,
+ 75,
+ 45,
+ 33,
+ 60,
+ 15,
+ 40,
+ 6,
+ 16,
+ 10,
+ 20,
+ 12,
+ None,
+ None,
+ ...]
+
+H=[20,33,15,6,40,60,45,16,75,10,80,12]
+x=Heap.heapify_bottom_up(H)
+x.a
+[inf,
+ 80,
+ 75,
+ 60,
+ 20,
+ 40,
+ 15,
+ 45,
+ 16,
+ 6,
+ 10,
+ 33,
+ 12,
  None,
  None,
  None,
- None,
- None,
- None,
- None,
- None,
- ..
- ..
- ]
- 
+ ...]
+
+## Note how non-unique the resulting heap is. We get different heaps but all properties are satisified in both cases
+
